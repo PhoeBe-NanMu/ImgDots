@@ -18,4 +18,13 @@ public class MainActivity extends AppCompatActivity {
     public void btnClick(View view) {
         startActivity(new Intent(this, ImageBrowseActivity.class));
     }
+
+    public void btn1Click(View view){
+        Intent intent = new Intent(this,SpacePageActivity.class);
+        startActivity(intent);
+    }
+
+    public void btn2Click(View view){
+        startActivity(new Intent(this, PoupWindowDemoActivity.class));
+    }
 }

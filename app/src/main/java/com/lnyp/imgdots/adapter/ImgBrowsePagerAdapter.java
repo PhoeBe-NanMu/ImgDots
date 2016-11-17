@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.leiyang.csumap.Dijkstra;
+import com.leiyang.csumap.Vertex;
 import com.lnyp.imgdots.R;
 import com.lnyp.imgdots.bean.ImgSimple;
 import com.lnyp.imgdots.bean.PointSimple;
+import com.lnyp.imgdots.utils.Utils;
 import com.lnyp.imgdots.view.ImageLayout;
 
 import java.util.ArrayList;
@@ -25,12 +28,15 @@ public class ImgBrowsePagerAdapter extends PagerAdapter {
 
     Activity mContext;
 
+
+
     private int width;
 
     public ImgBrowsePagerAdapter(Activity context, List<ImgSimple> imgSimples) {
 
         this.mContext = context;
         this.imgSimples = imgSimples;
+        Utils.dijkstras = new Dijkstra[getCount()];
 
         this.views = new ArrayList<>();
 
@@ -64,15 +70,19 @@ public class ImgBrowsePagerAdapter extends PagerAdapter {
 
         try {
 
-            String imgUrl = imgSimples.get(position).url;
+            int srcID = imgSimples.get(position).srcID;
             float scale = imgSimples.get(position).scale;
             ArrayList<PointSimple> pointSimples = imgSimples.get(position).pointSimples;
 
             layoutContent.setPoints(pointSimples);
 
+            Dijkstra dijkstra = addPointsSamplesToGraph(pointSimples);
+            dijkstra.setEdges(imgSimples.get(position).edges);
+            Utils.dijkstras[position] = dijkstra;
+
             int height = (int) (width * scale);
 
-            layoutContent.setImgBg(width, height, imgUrl);
+            layoutContent.setImgBg(width, height, srcID);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -80,5 +90,21 @@ public class ImgBrowsePagerAdapter extends PagerAdapter {
         ((ViewPager) container).addView(view);
 
         return view;
+    }
+
+    //添加一个Graph
+    private Dijkstra addPointsSamplesToGraph(ArrayList<PointSimple> pointSimples) {
+        Dijkstra dijkstra = new Dijkstra();
+        Vertex[] vertex = new Vertex[pointSimples.size()];
+        for (int i= 0;i<pointSimples.size();i++){
+            /**
+             * vertex[i]一定要先实例化
+             */
+            vertex[i] = new Vertex(i);
+            vertex[i].setPointInfo(pointSimples.get(i).getPointInfo());
+
+        }
+        dijkstra.setVertex_list(vertex);
+        return dijkstra;
     }
 }
