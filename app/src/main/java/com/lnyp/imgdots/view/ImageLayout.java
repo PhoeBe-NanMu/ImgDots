@@ -242,10 +242,10 @@ public class ImageLayout extends FrameLayout implements View.OnClickListener {
         }else if (itemStr.equals("详细信息")){
             //TODO 跳转至详细信息Activity
             Intent intent = new Intent(getContext(),DetailsActivity.class);
-//            intent.putExtra("pointInfo",pointInfoTemp);
-            intent.putExtra("ming",pointInfoTemp.getPointName());
-            intent.putExtra("info",pointInfoTemp.getPointSimpleInfo());
-            intent.putExtra("num",pointInfoTemp.getPointNum());
+            intent.putExtra("pointInfo",pointInfoTemp);
+//            intent.putExtra("ming",pointInfoTemp.getPointName());
+//            intent.putExtra("info",pointInfoTemp.getPointSimpleInfo());
+//            intent.putExtra("num",pointInfoTemp.getPointNum());
 
             getContext().startActivity(intent);
         } else if (itemStr.equals("设为起点")){

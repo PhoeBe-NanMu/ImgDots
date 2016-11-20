@@ -23,15 +23,11 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_info);
-//        PointInfo pointInfo = getIntent().getParcelableExtra("pointInfo");
-        Intent intent = getIntent();
-        String ming = intent.getStringExtra("ming");
-        String num = intent.getStringExtra("num");
-        String info = intent.getStringExtra("info");
+        PointInfo pointInfo = getIntent().getParcelableExtra("pointInfo");
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("景点名称：" + ming+"\n");
-        stringBuilder.append("景点代号：" + num+"\n");
-        stringBuilder.append("景点信息：" + info+"\n");
+        stringBuilder.append("景点名称：" + pointInfo.getPointName()+"\n");
+        stringBuilder.append("景点代号：" + pointInfo.getPointNum()+"\n");
+        stringBuilder.append("景点信息：" + pointInfo.getPointSimpleInfo()+"\n");
 
         infotv = (TextView) findViewById(R.id.info);
         infotv.setText(stringBuilder.toString());
